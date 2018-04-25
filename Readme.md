@@ -45,10 +45,12 @@ With this notebook file you can:
  - test neural networks on separated test data.
  - automatically search best hyperparameters for neural network models.
  - save information about models to history file
+ 
 There are three models files in 'models' folder, which can be used with this script:
  - 'model_opt_py' (CNN)
  - 'model_rnn_py' (RNN)
  - 'model_rcnn_py' (CNN + LSTM)
+ 
 They can be used for searching best hyperparameters and selecting best bugs classification model.
 
 2.2. How to use:
