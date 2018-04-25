@@ -11,6 +11,7 @@ Keras
 Numpy, scipy, pandas, sklearn, BeautifulSoup, gensim, nltk.
 
 1. ML in the file "bug_ml_tfidf.py".
+
 1.1. Description
 Machine learning script for estimate the accuracy of the bugzilla bugs classifying
 using different algorithms: 
@@ -27,6 +28,7 @@ reporter, reporter platform and OS)
 Output script results:
  1) Сlassification models accuracy
  2) Best models hyperparameters
+
 1.2. How to use
 Find file "bug_ml_tfidf.py".
 Open it with Spyder or Jupyter notebook.
@@ -34,6 +36,7 @@ Install required python packages if they are not already installed.
 Launch script.
 
 2. ML in the file "BugsClassifier.ipynb".
+
 2.1. Description
 With this notebook file you can:
  - download bugs data from mozilla
@@ -47,6 +50,7 @@ There are three models files in 'models' folder, which can be used with this scr
  - 'model_rnn_py' (RNN)
  - 'model_rcnn_py' (CNN + LSTM)
 They can be used for searching best hyperparameters and selecting best bugs classification model.
+
 2.2. How to use:
 Find file bugDataTest500.7z in 'data' folder, and extract it.
 Find file BugsClassifier.ipynb.
