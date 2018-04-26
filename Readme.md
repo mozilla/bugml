@@ -3,11 +3,17 @@ csv files with bugs features (bug description, reporter, etc)
 and script for downloading bugs data and save it to the csv file.
 
 Prerequisites:
+
 Python 3.6
+
 Jupyter notebook
+
 Python Scientific Development Environment (optional): Spyder or another.
+
 Tensorflow
+
 Keras
+
 Numpy, scipy, pandas, sklearn, BeautifulSoup, gensim, nltk.
 
 1. ML in the file "bug_ml.py".
@@ -21,6 +27,7 @@ using different algorithms:
  4) Random Forest
  5) K-Nearest-Neighbors
 Bug descriptions (text) converted to the vectors using tf-idf transformation
+
 Other bug features (reporter, platform, OS) processed as category data
 Input data for the script - csv file with examples of bugs
 (including bugs features - short description (summary), description (comments),
@@ -31,14 +38,19 @@ Output script results:
  2) Best models hyperparameters
 
 1.2. How to use
+
 Find file "bug_ml.py".
+
 Open it with Spyder or Jupyter notebook.
+
 Install required python packages if they are not already installed.
+
 Launch script.
 
 2. ML in the file "BugsClassifier.ipynb".
 
 2.1. Description
+
 With this notebook file you can:
  - download bugs data from mozilla
  - perform data munging on downloaded data, create and save datasets with different parameters
@@ -55,13 +67,19 @@ There are three models files in 'models' folder, which can be used with this scr
 They can be used for searching best hyperparameters and selecting best bugs classification model.
 
 2.2. How to use:
+
 Find file bugDataTest500.7z in 'data' folder, and extract it.
+
 Download Glove archive and extract it to 'data' folder. Link to archive:
 
 http://nlp.stanford.edu/data/glove.6B.zip
 
 Find file BugsClassifier.ipynb.
+
 Open it with jupyter notebook.
+
 Install required python packages if they are not already installed.
+
 After opening notebook, you can just sequentially run cells to performing these steps. 
+
 Since we provided the data along with the script, you can skip downloading data step, it commented out in code.
