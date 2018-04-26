@@ -56,6 +56,10 @@ They can be used for searching best hyperparameters and selecting best bugs clas
 
 2.2. How to use:
 Find file bugDataTest500.7z in 'data' folder, and extract it.
+Download Glove archive and extract it to 'data' folder. Link to archive:
+
+http://nlp.stanford.edu/data/glove.6B.zip
+
 Find file BugsClassifier.ipynb.
 Open it with jupyter notebook.
 Install required python packages if they are not already installed.
