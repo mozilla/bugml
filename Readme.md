@@ -10,7 +10,7 @@ Tensorflow
 Keras
 Numpy, scipy, pandas, sklearn, BeautifulSoup, gensim, nltk.
 
-1. ML in the file "bug_ml_tfidf.py".
+1. ML in the file "bug_ml.py".
 
 1.1. Description
 Machine learning script for estimate the accuracy of the bugzilla bugs classifying
@@ -24,13 +24,14 @@ Bug descriptions (text) converted to the vectors using tf-idf transformation
 Other bug features (reporter, platform, OS) processed as category data
 Input data for the script - csv file with examples of bugs
 (including bugs features - short description (summary), description (comments),
-reporter, reporter platform and OS)
+reporter, reporter platform and OS).
+
 Output script results:
  1) Сlassification models accuracy
  2) Best models hyperparameters
 
 1.2. How to use
-Find file "bug_ml_tfidf.py".
+Find file "bug_ml.py".
 Open it with Spyder or Jupyter notebook.
 Install required python packages if they are not already installed.
 Launch script.
