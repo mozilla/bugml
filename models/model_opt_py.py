@@ -19,6 +19,16 @@ import keras.optimizers
 
 from sklearn.metrics import roc_auc_score
 
+DATA_DIR_C = os.path.join(os.getcwd(), 'data')
+MODELS_DIR_C = os.path.join(os.getcwd(), 'models')
+LOGS_DIR_C = os.path.join(os.getcwd(), 'logs')
+if not os.path.exists(DATA_DIR_C):
+    os.makedirs(DATA_DIR_C)
+if not os.path.exists(MODELS_DIR_C):
+    os.makedirs(MODELS_DIR_C)
+if not os.path.exists(LOGS_DIR_C):
+    os.makedirs(LOGS_DIR_C)
+
 ModelParams = {'batch_size': 64,
                'dropout': 0.1,
                'conv_size': 3,
@@ -55,17 +65,17 @@ def set_params(params):
     except Exception as exc:
         pass
 
-def dict_save(d1, dictName = 'dict_temp_save', sDir = 'E:/Programs/Tensorflow/data' ):
+def dict_save(d1, dictName = 'dict_temp_save', sDir = DATA_DIR_C ):
     np.save(os.path.join(sDir, dictName + '.npy'), d1)    
 
-def dict_load(dictName = 'dict_temp_save', sDir = 'E:/Programs/Tensorflow/data' ):
+def dict_load(dictName = 'dict_temp_save', sDir = DATA_DIR_C ):
     return np.load(os.path.join(sDir, dictName + '.npy')).item()
 
-def dataset_load(datasetName = 'current_dataset', sDir = 'E:/Programs/Tensorflow/data' ):
+def dataset_load(datasetName = 'current_dataset', sDir = DATA_DIR_C ):
     dataset = np.load(os.path.join(sDir, datasetName + '.npz'))
     return list(map(lambda x: dataset[x], dataset.files))
 
-def embedding_matrix_load(wordIndex, sName = 'glove.6B.100d.txt', sDir = 'E:/Programs/Tensorflow/data', binary = False):
+def embedding_matrix_load(wordIndex, sName = 'glove.6B.100d.txt', sDir = DATA_DIR_C, binary = False):
     embeddings_index = {}
     word2vec = None
     if binary:
@@ -93,7 +103,7 @@ def embedding_matrix_load(wordIndex, sName = 'glove.6B.100d.txt', sDir = 'E:/Pro
     gc.collect()
     return embedding_matrix
     
-def model_save(model, modelName = 'model_temp', sDir = 'E:/Programs/Tensorflow/models'):    
+def model_save(model, modelName = 'model_temp', sDir = MODELS_DIR_C):    
     if modelName == '':
         modelName = model.name
     model.name = modelName
