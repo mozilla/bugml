@@ -1,0 +1,14 @@
+FROM python:3.6.5
+
+RUN groupadd -r svm && useradd -r -g svm svm
+RUN pip install Flask uWSGI requests numpy scipy pandas sklearn mysql-connector mysql-connector-python
+
+WORKDIR /app
+VOLUME /app
+COPY server_app_cmd.sh /
+EXPOSE 5000 9090 9191
+
+USER svm
+
+CMD ["/server_app_cmd.sh"]
+
