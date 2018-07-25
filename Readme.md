@@ -2,7 +2,7 @@
 
 
 	I. Content
-	
+
 In this repo there are:
 
  - docker files and scripts for deploy system to aws instance:
@@ -16,15 +16,15 @@ In this repo there are:
 	server_app_cmd.sh
 
 	docker-compose.yml
-	
-	
+
+
  - python scripts for bugs downloading, classification, interaction with database, API server:
- 
+
 	bugs_updater_app.py
 
 	server_app.py
 
-	
+
 	configuration.py
 
 	utils.py
@@ -41,7 +41,7 @@ In this repo there are:
 
 	BugsDataUpdater.py
 
-	
+
 	model_bugclassifier.py
 
 	model_opt_py.py
@@ -49,13 +49,13 @@ In this repo there are:
 	model_rcnn_py.py
 
 	model_rnn_py.py
-	
-	
+
+
  - archive with csv file with bugs features (bug description, reporter, etc):
 	app/data/bugDataTest500.7z
-	
-	
-	
+
+
+
 	II. Global scheme
 
 Bugzilla - Dockerfile_bugs_updater - Dockerfile_storage - Dockerfile_server_app - Requests
@@ -68,9 +68,9 @@ There are three parts of service, located in corresponding containers.
 
 Dockerfile_storage contains running mysql database which can store information about bugs.
 
-Dockerfile_bugs_updater can download bugs from bugzilla, 
+Dockerfile_bugs_updater can download bugs from bugzilla,
 
-then process and classify them and save information about them to database. 
+then process and classify them and save information about them to database.
 
 It can also periodically check changes of component for bugs from database in bugzilla
 
@@ -89,7 +89,7 @@ There is bugs data updater algorithm:
    - save it to database
    - select untriaged bugs from db and check their components changes in bugzilla, update information in db
 
-Dockerfile_server_app provides possibility to make requests to service. 
+Dockerfile_server_app provides possibility to make requests to service.
 
 It may process requests, read required data from database and return answer.
 
@@ -97,8 +97,8 @@ It may process requests, read required data from database and return answer.
 
 	IV. Deployment with docker containers
 
-	
-	
+
+
 In the steps below it is assumed that Operation System is Ubuntu 16.04.
 
 Docker containers "packet" consists of:
@@ -142,7 +142,7 @@ Rebuild docker images from the docker containers in current console shell (termi
 1) docker-compose build
 2) docker-compose up
 
-NOTE: If the service run at first time, then it can be tested with REST requests in a 12 hours approximately. 
+NOTE: If the service run at first time, then it can be tested with REST requests in a 12 hours approximately.
 
 NOTE: If the service run not at first time, then it can be tested with REST requests in 20 seconds approximately.
 
@@ -150,8 +150,8 @@ NOTE: If the service run not at first time, then it can be tested with REST requ
 
 	V. REST API examples for get bug suggested component
 
-	
-	
+
+
 For start API server in development mode - set server_app ENV: 'DEV' in file docker-compose.yml
 
 For start API server in production mode - set server_app ENV='PROD' (or other value not equal to 'DEV') in file docker-compose.yml
@@ -247,8 +247,8 @@ GET http://localhost:5000/component?bug_id=1444614,1445948,0,1
 
 Response:
 
-{"results": [{"bug_id": 1445948, "suggested_component": "Tabbed Browser", "short_desc": "Use gMultiProcessBrowser in gBrowser.init", "confidence": 0.762}, 
-{"bug_id": 1444614, "suggested_component": "Address Bar", "short_desc": "urlbar binding constructor initializes gBrowser and gBrowser.tabContainer early", "confidence": 0.84}], 
+{"results": [{"bug_id": 1445948, "suggested_component": "Tabbed Browser", "short_desc": "Use gMultiProcessBrowser in gBrowser.init", "confidence": 0.762},
+{"bug_id": 1444614, "suggested_component": "Address Bar", "short_desc": "urlbar binding constructor initializes gBrowser and gBrowser.tabContainer early", "confidence": 0.84}],
 "not_found_bug_id": [0, 1]}
 
 Status code:
@@ -329,4 +329,3 @@ Response:
 Status code:
 
 400
-
