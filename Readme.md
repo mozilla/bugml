@@ -1,7 +1,7 @@
 		Bugzilla bug classification service
 
 
-	I. Content
+# Content
 
 In this repo there are:
 
@@ -56,13 +56,13 @@ In this repo there are:
 
 
 
-	II. Global scheme
+# Global scheme
 
 Bugzilla - Dockerfile_bugs_updater - Dockerfile_storage - Dockerfile_server_app - Requests
 
 
 
-	III. Description
+# Description
 
 There are three parts of service, located in corresponding containers.
 
@@ -95,7 +95,7 @@ It may process requests, read required data from database and return answer.
 
 
 
-	IV. Deployment with docker containers
+# Deployment with docker containers
 
 
 
@@ -148,7 +148,7 @@ NOTE: If the service run not at first time, then it can be tested with REST requ
 
 
 
-	V. REST API examples for get bug suggested component
+# REST API examples for get bug suggested component
 
 
 
@@ -170,25 +170,33 @@ a. By one bug id.
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=1301812
+```
 
 Response:
 
+```
 {"results": [{"bug_id": 1301812, "suggested_component": "Developer Tools", "short_desc": "Remove devtools/shared/webaudio.js", "confidence": 0.929}]}
+```
 
 Status code:
 
-200
+```200```
 
 
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=0
+```
 
 Response:
 
+```
 {"error_msg": "There is no bug with ID: 0", "bug_id": 0}
+```
 
 Status code:
 
@@ -198,11 +206,15 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=qwerty
+```
 
 Response:
 
+```
 {"error_msg": "Invalid request, bug_id must be integer value"}
+```
 
 Status code:
 
@@ -212,11 +224,15 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component
+```
 
 Response:
 
+```
 {"error_msg": "Invalid request, specify bug_id or start/end dates"}
+```
 
 Status code:
 
@@ -228,12 +244,15 @@ b. By list of bugs id.
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=1444614,1445948
+```
 
 Response:
 
-{"results": [{"bug_id": 1445948, "suggested_component": "Tabbed Browser", "short_desc": "Use gMultiProcessBrowser in gBrowser.init", "confidence": 0.762},
+```{"results": [{"bug_id": 1445948, "suggested_component": "Tabbed Browser", "short_desc": "Use gMultiProcessBrowser in gBrowser.init", "confidence": 0.762},
 {"bug_id": 1444614, "suggested_component": "Address Bar", "short_desc": "urlbar binding constructor initializes gBrowser and gBrowser.tabContainer early", "confidence": 0.84}]}
+```
 
 Status code:
 
@@ -243,13 +262,17 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=1444614,1445948,0,1
+```
 
 Response:
 
+```
 {"results": [{"bug_id": 1445948, "suggested_component": "Tabbed Browser", "short_desc": "Use gMultiProcessBrowser in gBrowser.init", "confidence": 0.762},
 {"bug_id": 1444614, "suggested_component": "Address Bar", "short_desc": "urlbar binding constructor initializes gBrowser and gBrowser.tabContainer early", "confidence": 0.84}],
 "not_found_bug_id": [0, 1]}
+```
 
 Status code:
 
@@ -259,11 +282,15 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=0,1
+```
 
 Response:
 
+```
 {"error_msg": "There are no bugs with requested IDs", "bug_id": [0, 1]}
+```
 
 Status code:
 
@@ -273,11 +300,15 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?bug_id=1444614,qwerty
+```
 
 Response:
 
+```
 {"error_msg": "Invalid request, bug_id must be integer value"}
+```
 
 Status code:
 
@@ -290,13 +321,17 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?start_date=2018-06-05&end_date=2018-06-05
+```
 
 Response:
 
+```
 {"results": [{"bug_id": 177360, "suggested_component": "Bookmarks & History", "short_desc": "URL Bar history drop down displays entries in reverse chronological order", "confidence": 0.886},
 
 {"bug_id": 1437728, "suggested_component": "General", "short_desc": "toolkit/xre/test/browser_checkcfgstatus.js fails after bug 1193394", "confidence": 0.989}]}
+```
 
 Status code:
 
@@ -306,11 +341,15 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?start_date=2018-07-01&end_date=2018-07-02
+```
 
 Response:
 
+```
 {"error_msg": "There are no bugs between dates [2018-07-01; 2018-07-02]"}
+```
 
 Status code:
 
@@ -320,12 +359,15 @@ Status code:
 
 Request:
 
+```
 GET http://localhost:5000/component?start_date=2018-07-01&end_date=qwerty
+```
 
 Response:
 
+```
 {"error_msg": "Invalid request, start/end dates should be YYYY-MM-DD"}
-
+```
 Status code:
 
 400
