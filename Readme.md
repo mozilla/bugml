@@ -99,7 +99,7 @@ It may process requests, read required data from database and return answer.
 
 
 
-In the steps below it is assumed that Operation System is Ubuntu 16.04.
+In the steps below it is assumed that Operating System is Ubuntu 16.04.
 
 Docker containers "packet" consists of:
 1) dockerfile "Dockerfile_bugs_updater" - for run container with script which download untriaged Firefox bugs, classify them to the suggested component and save in mysql storage;
