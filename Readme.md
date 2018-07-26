@@ -6,49 +6,28 @@
 In this repo there are:
 
  - docker files and scripts for deploy system to aws instance:
-
-	Dockerfile_bugs_updater
-
-	Dockerfile_server_app
-
-	Dockerfile_storage
-
-	server_app_cmd.sh
-
-	docker-compose.yml
+  - Dockerfile_bugs_updater
+  - Dockerfile_server_app
+  - Dockerfile_storage
+  - server_app_cmd.sh
+  - docker-compose.yml
 
 
  - python scripts for bugs downloading, classification, interaction with database, API server:
-
-	bugs_updater_app.py
-
-	server_app.py
-
-
-	configuration.py
-
-	utils.py
-
-	logger.py
-
-	bugclassifier.py
-
-	storage.py
-
-	DataDownloader.py
-
-	DataProcessor.py
-
-	BugsDataUpdater.py
-
-
-	model_bugclassifier.py
-
-	model_opt_py.py
-
-	model_rcnn_py.py
-
-	model_rnn_py.py
+  - bugs_updater_app.py
+  - server_app.py
+  - configuration.py
+  - utils.py
+  - logger.py
+  - bugclassifier.py
+  - storage.py
+  - DataDownloader.py
+  - DataProcessor.py
+  - BugsDataUpdater.py
+  - model_bugclassifier.py
+  - model_opt_py.py
+  - model_rcnn_py.py
+  - model_rnn_py.py
 
 
  - archive with csv file with bugs features (bug description, reporter, etc):
