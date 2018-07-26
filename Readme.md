@@ -95,16 +95,10 @@ Prepare for build docker images from the docker containers at first time:
 3) cd app/data
 4) apt-get install p7zfull
 5) 7z e bugDataTest500.7z
-6) cd ..
-7) mkdir config
-8) mkdir logs
-9) chmod u+rw logs config models data scripts
-10) cd ..
-11) mkdir storage_data
-12) chmod u+x server_app_cmd.sh
-13) export UID
-14) export GID=$(id -g)
-15) docker-compose build
+6) cd $OLDPWD
+7) export UID
+8) export GID=$(id -g)
+9) docker-compose build
 
 Run bug classification service in docker containers:
 1) docker-compose up ("Ctrl + C" for shutdown bugs classifying system)
