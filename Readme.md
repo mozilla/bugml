@@ -1,7 +1,7 @@
-		Bugzilla bug classification service
+# Bugzilla bug classification service
 
 
-# Content
+## Content
 
 In this repo there are:
 
@@ -35,13 +35,13 @@ In this repo there are:
 
 
 
-# Global scheme
+## Global scheme
 
 Bugzilla - Dockerfile_bugs_updater - Dockerfile_storage - Dockerfile_server_app - Requests
 
 
 
-# Description
+## Description
 
 There are three parts of service, located in corresponding containers.
 
@@ -74,7 +74,7 @@ It may process requests, read required data from database and return answer.
 
 
 
-# Deployment with docker containers
+## Deployment with docker containers
 
 
 
@@ -127,7 +127,7 @@ NOTE: If the service run not at first time, then it can be tested with REST requ
 
 
 
-# REST API examples for get bug suggested component
+## REST API examples for get bug suggested component
 
 
 
