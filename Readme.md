@@ -92,7 +92,7 @@ Install Docker and Docker Compose.
 2) Docker Compose - https://docs.docker.com/compose/install/
 
 Prepare for build docker images from the docker containers at first time:
-1) clone repository https://github.com/exaltcg/bugml.git from the github to the BugsML
+1) clone repository https://github.com/mozilla/bugml.git from the github to the BugsML
 2) cd BugsML
 3) cd app/data
 4) apt-get install p7zfull
