@@ -11,7 +11,7 @@ else:
 import configuration as config
 from BugsDataUpdater import runBugsDataUpdater
 
-    
+
 def initApp():
     if not os.path.exists(config.LOGS_DIR_C):
         os.makedirs(config.LOGS_DIR_C)
@@ -25,7 +25,7 @@ def initApp():
     if os.path.exists(config.MODELS_DIR_C):
         if config.MODELS_DIR_C not in sys.path:
             sys.path.append(config.MODELS_DIR_C)
-    
-        
+
+
 initApp()
 runBugsDataUpdater()

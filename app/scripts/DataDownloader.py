@@ -28,7 +28,8 @@ async def downloadUrls(sUrls, data_frame, data_handler):
     with ThreadPoolExecutor(max_workers=32) as executor:
         while len(remainingUrls) > 0:
             loop = asyncio.get_event_loop()
-            futures = [loop.run_in_executor(executor, requests.get, sUrl) for sUrl in remainingUrls]
+            futures = [loop.run_in_executor(executor, requests.get, sUrl)
+                       for sUrl in remainingUrls]
             print('futures count = ', len(futures))
             rCount = 0
             remainingUrlsIndices = []
@@ -51,28 +52,33 @@ async def downloadUrls(sUrls, data_frame, data_handler):
             else:
                 remainingUrls = []
 
+
 def downloadExtendedData(data_frame):
     def extendedDataHandler(df, jData):
         for sId, obj in jData['bugs'].items():
             df.set_value(int(sId), config.DESCRIPTION, obj['comments'][0]['text'])
-    commentUrls = ['https://bugzilla.mozilla.org' + '/rest/bug/' + str(bugId) + '/comment' for bugId in data_frame.bug_id]
+    commentUrls = ['https://bugzilla.mozilla.org' + '/rest/bug/' +
+                   str(bugId) + '/comment' for bugId in data_frame.bug_id]
     loop = asyncio.get_event_loop()
     loop.run_until_complete(downloadUrls(commentUrls, data_frame, extendedDataHandler))
+
 
 # provides possibility of saving data after exceptions
 dataAll = pd.DataFrame()
 
-def downloadData(resolutions = ['FIXED'], 
-                 sDir = config.DATA_DIR_C, sName = config.DATA_FILENAME_C,
-                 nMax = 100000,
-                 columns = ["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority",
-                            "classification", "product", "component", "bug_status", "resolution", "short_desc",
-                            "rep_platform", "op_sys", "reporter", "version"],
-                 components = {}, # exactProducts and exactComponents will be ignored if components not empty.
-                 exactProducts = [],
-                 exactComponents = [],
-                 dateFrom = '2000-01-01', dateTo = 'Now',
-                 baseLogger = None):
+
+def downloadData(resolutions=['FIXED'],
+                 sDir=config.DATA_DIR_C, sName=config.DATA_FILENAME_C,
+                 nMax=100000,
+                 columns=["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority",
+                          "classification", "product", "component", "bug_status", "resolution", "short_desc",
+                          "rep_platform", "op_sys", "reporter", "version"],
+                 # exactProducts and exactComponents will be ignored if components not empty.
+                 components={},
+                 exactProducts=[],
+                 exactComponents=[],
+                 dateFrom='2000-01-01', dateTo='Now',
+                 baseLogger=None):
     global dataAll
     if baseLogger is None:
         logger = Logger(log_dir=config.LOG_DIR, log_file_base_name='downloadData')
@@ -80,7 +86,7 @@ def downloadData(resolutions = ['FIXED'],
         logger = baseLogger
     resList = ["---", "FIXED", "INVALID", "WONTFIX", "DUPLICATE", "WORKSFORME", "INCOMPLETE",
                "SUPPORT", "EXPIRED", "MOVED"]
-    columnsList = ["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority", "classification", 
+    columnsList = ["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority", "classification",
                    "product", "component", "bug_status", "resolution", "short_desc",
                    "rep_platform", "op_sys", "reporter", "version"]
     if not os.path.isdir(sDir):
@@ -93,10 +99,10 @@ def downloadData(resolutions = ['FIXED'],
                 baseUrl += ('%2C' + colName)
             else:
                 baseUrl += colName
-                bValid = True            
+                bValid = True
     if not bValid:
         return False
-    
+
     bValid = False
     for res in resolutions:
         if res in resList:
@@ -104,11 +110,11 @@ def downloadData(resolutions = ['FIXED'],
             bValid = True
     if not bValid:
         return False
-    
+
     baseUrl += '&ctype=csv'
     if dateFrom is not None and dateTo is not None:
         baseUrl += '&chfield=[Bug%20creation]&chfieldfrom=' + dateFrom + '&chfieldto=' + dateTo
-    
+
     bResult = False
     fileStarted = False
     retryCount = 5
@@ -137,7 +143,7 @@ def downloadData(resolutions = ['FIXED'],
         if len(exactProducts) == 0 and len(exactComponents) == 0:
             sUrls = [baseUrl]
     #print(len(components), len(sUrls))
-    #print(sUrls)
+    # print(sUrls)
     for sUrl in sUrls:
         logger.info('start loading for: ' + sUrl)
         offset = 0
@@ -145,12 +151,13 @@ def downloadData(resolutions = ['FIXED'],
         retryIndex = 0
         while (offset < nMax) and (downloadedCount != 0):
             try:
-                sCurrentUrl = sUrl + '&limit=' + str(min(step, nMax - offset)) + '&offset=' + str(offset)
+                sCurrentUrl = sUrl + '&limit=' + \
+                    str(min(step, nMax - offset)) + '&offset=' + str(offset)
                 logger.info('Start downloading data')
                 r = requests.get(sCurrentUrl, allow_redirects=True)
                 dataPart = pd.read_csv(io.BytesIO(r.content), low_memory=False)
                 dataPart['description'] = ''
-                dataPart.set_index(keys = 'bug_id', drop = False, inplace = True)
+                dataPart.set_index(keys='bug_id', drop=False, inplace=True)
                 logger.info('Start downloading extended data')
                 downloadExtendedData(dataPart)
                 logger.info('Finish downloading extended data')
@@ -171,11 +178,11 @@ def downloadData(resolutions = ['FIXED'],
                 if offset > 0:
                     if fileStarted:
                         with open(os.path.join(sDir, sName), 'a', encoding='utf-8') as f:
-                            dataAll.to_csv(f, header=False, encoding = 'utf-8')
+                            dataAll.to_csv(f, header=False, encoding='utf-8')
                             logger.info('append data shape = ' + str(dataAll.shape))
                             dataAll = pd.DataFrame()
                     else:
-                        dataAll.to_csv(os.path.join(sDir, sName), encoding = 'utf-8')
+                        dataAll.to_csv(os.path.join(sDir, sName), encoding='utf-8')
                         logger.info('write data shape = ' + str(dataAll.shape))
                         dataAll = pd.DataFrame()
                         fileStarted = True
@@ -189,11 +196,11 @@ def downloadData(resolutions = ['FIXED'],
         if offset > 0:
             if fileStarted:
                 with open(os.path.join(sDir, sName), 'a', encoding='utf-8') as f:
-                    dataAll.to_csv(f, header=False, encoding = 'utf-8')
+                    dataAll.to_csv(f, header=False, encoding='utf-8')
                     logger.info('append data shape = ' + str(dataAll.shape))
                     dataAll = pd.DataFrame()
             else:
-                dataAll.to_csv(os.path.join(sDir, sName), encoding = 'utf-8')
+                dataAll.to_csv(os.path.join(sDir, sName), encoding='utf-8')
                 logger.info('write data shape = ' + str(dataAll.shape))
                 dataAll = pd.DataFrame()
                 fileStarted = True
@@ -204,33 +211,36 @@ def downloadData(resolutions = ['FIXED'],
 
 
 # download actual untriaged data, returns path to downloaded file
-def downloadUntriaged(dateFrom = '', sName = config.UNTRIAGED_FILE_C, baseLogger = None):
-    if not downloadData(resolutions = ['---'], 
-                        sDir = config.DATA_DIR_C, sName = sName, nMax = 10000,
-                        exactComponents = ['Untriaged'],
-                        dateFrom = dateFrom if ''!=dateFrom else (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d'),
-                        dateTo = 'Now', baseLogger = baseLogger):
+def downloadUntriaged(dateFrom='', sName=config.UNTRIAGED_FILE_C, baseLogger=None):
+    if not downloadData(resolutions=['---'],
+                        sDir=config.DATA_DIR_C, sName=sName, nMax=10000,
+                        exactComponents=['Untriaged'],
+                        dateFrom=dateFrom if '' != dateFrom else (
+                            datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d'),
+                        dateTo='Now', baseLogger=baseLogger):
         return ''
     else:
         return os.path.join(config.DATA_DIR_C, sName)
 
 # check actual bugs components info on bugzilla
-def checkBugsComponentData(data_frame, sBugProduct, logger = None):
+
+
+def checkBugsComponentData(data_frame, sBugProduct, logger=None):
     def checkBugsComponentDataHandler(df, jData):
         for obj in jData['bugs']:
             if obj['product'] != sBugProduct:
-                df.set_value(int(obj['id']), 'product' ,obj['product'])
+                df.set_value(int(obj['id']), 'product', obj['product'])
             if obj['component'] != 'Untriaged':
                 df.set_value(int(obj['id']), 'component', obj['component'])
     if logger is None:
         print('checkBugsComponentData start')
     else:
         logger.info('checkBugsComponentData start')
-    bugsUrls = ['https://bugzilla.mozilla.org' + '/rest/bug/' + str(bugId) for bugId in data_frame.bug_id]
+    bugsUrls = ['https://bugzilla.mozilla.org' + '/rest/bug/' +
+                str(bugId) for bugId in data_frame.bug_id]
     loop = asyncio.get_event_loop()
     loop.run_until_complete(downloadUrls(bugsUrls, data_frame, checkBugsComponentDataHandler))
     if logger is None:
         print('checkBugsComponentData finished')
     else:
         logger.info('checkBugsComponentData finished')
-    
