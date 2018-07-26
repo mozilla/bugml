@@ -100,10 +100,10 @@ Prepare for build docker images from the docker containers at first time:
 6) cd ..
 7) mkdir config
 8) mkdir logs
-9) sudo chmod u+rw logs config models data scripts
+9) chmod u+rw logs config models data scripts
 10) cd ..
 11) mkdir storage_data
-12) sudo chmod u+x server_app_cmd.sh
+12) chmod u+x server_app_cmd.sh
 13) export UID
 14) export GID=$(id -g)
 15) docker-compose build
