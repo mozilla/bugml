@@ -343,3 +343,11 @@ Response:
 Status code:
 
 400
+
+## Debugging
+
+Logs are stored in app/logs/. Some outputs are not displayed 
+by docker-compose.
+
+Error in loadPredictionsForListFromTable:Table 'BugsDB.BugsDataTable' doesn't exist
+TODO
