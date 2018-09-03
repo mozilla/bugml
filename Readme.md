@@ -351,3 +351,8 @@ by docker-compose.
 
 Error in loadPredictionsForListFromTable:Table 'BugsDB.BugsDataTable' doesn't exist
 TODO
+
+when starting the server docker, 'standard_init_linux.go:190: exec user process caused "permission denied"'
+Ugly workaround  changing "USER svm" to "USER root" in Dockerfile_server_app
+TODO
+
