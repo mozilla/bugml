@@ -4,6 +4,7 @@ import json
 import numpy as np
 import pandas as pd
 from flask import Flask, request, Response
+import operator
 
 SCRIPTS_DIR_C = os.path.abspath(os.path.join(os.getcwd(), 'scripts'))
 if os.path.exists(SCRIPTS_DIR_C):
@@ -56,6 +57,10 @@ def bugs_data_as_json(bugs_data, not_found_bugs=None):
     results = {config.API_JSON_RESULTS: results}
     if not_found_bugs is not None and len(not_found_bugs) > 0:
         results[config.API_NOT_FOUND_BUG_ID] = not_found_bugs
+    # Sort the results by confidence
+    results['results'] = sorted(results['results'],
+                                key=operator.itemgetter('confidence'),
+                                reverse=True)
     return json.loads(json.dumps(results))
 
 
