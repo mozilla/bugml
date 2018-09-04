@@ -79,7 +79,7 @@ def index():
 
 def log_response(message, status):
     logger.info(message)
-    return Response(message, status=status)
+    return Response(message, status=status, mimetype='application/json')
 
 
 @app.route('/component', methods=['GET'])
