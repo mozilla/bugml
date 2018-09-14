@@ -56,7 +56,6 @@ async def downloadUrls(sUrls, data_frame, data_handler):
 def downloadExtendedData(data_frame):
     def extendedDataHandler(df, jData):
         for sId, obj in jData['bugs'].items():
-            print("Processing " + str(sId))
             df.set_value(int(sId), config.DESCRIPTION, obj['comments'][0]['text'])
     commentUrls = ['https://bugzilla.mozilla.org' + '/rest/bug/' +
                    str(bugId) + '/comment' for bugId in data_frame.bug_id]
