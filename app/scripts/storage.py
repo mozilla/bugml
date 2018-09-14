@@ -291,6 +291,7 @@ class Storage:
         return res
 
     # returns list with objects with bug_id, short_desc and processed bugs predictions (3 by default)
+    # Ignores the bugs which have been already triagged
     # example:
     # [{ 'bug_id' : '1',
     #   'short_desc' : 'some short description of bug',
@@ -310,10 +311,11 @@ class Storage:
             if not isinstance(dateEnd, str):
                 sDateEnd = dateEnd.strftime('%Y-%m-%d')
             queryResult = session.sql('SELECT ' +
-                                      ', '.join([config.STORAGE_COLUMN_ID, config.STORAGE_COLUMN_OPENDATE,
+                                      ', '.join([config.STORAGE_COLUMN_ID, config.STORAGE_COLUMN_OPENDATE, config.STORAGE_COLUMN_COMPONENT,
                                                  config.STORAGE_COLUMN_SUMMARY, config.STORAGE_COLUMN_PREDICTIONS]) +
                                       ' FROM ' + self.sqlWrapper(tableName) +
-                                      ' WHERE ' + config.STORAGE_COLUMN_OPENDATE +
+                                      ' WHERE ' + config.STORAGE_COLUMN_COMPONENT + ' is null AND ' +
+                                      config.STORAGE_COLUMN_OPENDATE +
                                       ' BETWEEN STR_TO_DATE(' + self.sqlWrapper(sDateStart, '\'') +
                                       ', \'%Y-%m-%d %H:%i:%s\') AND STR_TO_DATE(' + self.sqlWrapper(sDateEnd, '\'') +
                                       ', \'%Y-%m-%d %H:%i:%s\')').execute()
