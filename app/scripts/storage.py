@@ -311,7 +311,7 @@ class Storage:
             if not isinstance(dateEnd, str):
                 sDateEnd = dateEnd.strftime('%Y-%m-%d')
             queryResult = session.sql('SELECT ' +
-                                      ', '.join([config.STORAGE_COLUMN_ID, config.STORAGE_COLUMN_OPENDATE, config.STORAGE_COLUMN_COMPONENT,
+                                      ', '.join([config.STORAGE_COLUMN_ID, config.STORAGE_COLUMN_OPENDATE,
                                                  config.STORAGE_COLUMN_SUMMARY, config.STORAGE_COLUMN_PREDICTIONS]) +
                                       ' FROM ' + self.sqlWrapper(tableName) +
                                       ' WHERE ' + config.STORAGE_COLUMN_COMPONENT + ' is null AND ' +
