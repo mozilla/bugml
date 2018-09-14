@@ -56,6 +56,7 @@ async def downloadUrls(sUrls, data_frame, data_handler):
 def downloadExtendedData(data_frame):
     def extendedDataHandler(df, jData):
         for sId, obj in jData['bugs'].items():
+            print("Processing " + str(sId))
             df.set_value(int(sId), config.DESCRIPTION, obj['comments'][0]['text'])
     commentUrls = ['https://bugzilla.mozilla.org' + '/rest/bug/' +
                    str(bugId) + '/comment' for bugId in data_frame.bug_id]
@@ -70,9 +71,7 @@ dataAll = pd.DataFrame()
 def downloadData(resolutions=['FIXED'],
                  sDir=config.DATA_DIR_C, sName=config.DATA_FILENAME_C,
                  nMax=100000,
-                 columns=["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority",
-                          "classification", "product", "component", "bug_status", "resolution", "short_desc",
-                          "rep_platform", "op_sys", "reporter", "version"],
+                 columns=config.columns,
                  # exactProducts and exactComponents will be ignored if components not empty.
                  components={},
                  exactProducts=[],
@@ -86,15 +85,12 @@ def downloadData(resolutions=['FIXED'],
         logger = baseLogger
     resList = ["---", "FIXED", "INVALID", "WONTFIX", "DUPLICATE", "WORKSFORME", "INCOMPLETE",
                "SUPPORT", "EXPIRED", "MOVED"]
-    columnsList = ["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority", "classification",
-                   "product", "component", "bug_status", "resolution", "short_desc",
-                   "rep_platform", "op_sys", "reporter", "version"]
     if not os.path.isdir(sDir):
         return False
     baseUrl = 'https://bugzilla.mozilla.org/buglist.cgi?query_format=advanced&columnlist='
     bValid = False
     for colName in columns:
-        if colName in columnsList:
+        if colName in config.columns:
             if bValid:
                 baseUrl += ('%2C' + colName)
             else:

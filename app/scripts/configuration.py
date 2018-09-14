@@ -40,6 +40,11 @@ OTHER_PLATFORMS = 'OtherPlatforms'
 OTHER_OP_SYS = 'OtherOpSys'
 OTHER_REPORTERS = 'OtherReporters'
 
+# Columns retrieved
+columns=["bug_id", "opendate", "cc_count", "keywords", "longdescs.count", "priority",
+         "classification", "product", "component", "bug_status", "resolution", "short_desc",
+         "rep_platform", "op_sys", "reporter", "version"]
+
 # count of splits in cross-validation and grid search models hyperparams
 
 TEST_SIZE = 0.10
