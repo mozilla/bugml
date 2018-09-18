@@ -1,0 +1,65 @@
+#export UID
+#export GID=$(id -g)
+#docker-compose build
+#docker-compose up
+# Ctrl + C
+#docker stop $(docker ps -aq); docker rm $(docker ps -aq)
+
+version: '2'
+
+services:
+    storage:
+        build:
+            context: .
+            args:
+                UID: ${UID}
+                GID: ${GID}
+            dockerfile: Dockerfile_storage
+        container_name: storage_container
+        ports:
+            - '33060:33060'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'jwoe_521Mdb'
+            MYSQL_USER: 'svm'
+            MYSQL_PASSWORD: 'jwoe_521Mdb'
+            MYSQL_DATABASE: 'BugsDB'
+        volumes:
+            - ./storage_data:/var/lib/mysql:rw
+        restart: always
+
+    model_storage:
+        build:
+            context: .
+            dockerfile: Dockerfile_bugs_updater
+        container_name: bugs_updater_container
+        volumes:
+            - ./app:/app
+        links:
+            - storage
+        depends_on:
+            - storage
+        restart: always
+        
+    server_app:
+        build:
+            context: .
+            dockerfile: Dockerfile_server_app
+        container_name: server_app_container
+        ports:
+            - '5000:5000'
+            - '9090:9090'
+            - '9091:9091'
+        environment:
+            ENV: 'DEV'
+        volumes:
+            - ./app:/app
+        links:
+            - storage
+        depends_on:
+            - storage
+
+
+volumes:
+  storage_data:
+  app:
+

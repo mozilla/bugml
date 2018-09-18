@@ -1,0 +1,70 @@
+FROM python:3.6.5
+#FROM ubuntu:16.04
+
+RUN groupadd -r svm && useradd -r -g svm svm
+
+ARG TENSORFLOW_VERSION=1.4.0
+ARG TENSORFLOW_ARCH=cpu
+ARG KERAS_VERSION=2.0.8
+
+
+# Install some dependencies
+RUN apt-get update && apt-get install -y \
+		curl \
+		wget \
+		&& \
+	apt-get clean && \
+	apt-get autoremove && \
+	rm -rf /var/lib/apt/lists/*
+    
+# Install pip
+RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
+	python get-pip.py && \
+	rm get-pip.py
+
+# Add SNI support to Python
+RUN pip install \
+		pyopenssl \
+		ndg-httpsclient \
+		pyasn1
+
+# Install few libs
+RUN pip install numpy scipy h5py pandas scikit-image sklearn requests nltk 
+
+# Install mysql connector
+RUN pip install mysql-connector mysql-connector-python
+
+# Install TensorFlow
+RUN pip install \
+	https://storage.googleapis.com/tensorflow/linux/${TENSORFLOW_ARCH}/tensorflow-${TENSORFLOW_VERSION}-cp36-cp36m-linux_x86_64.whl
+
+# Install Keras
+RUN pip install git+git://github.com/fchollet/keras.git@${KERAS_VERSION}
+
+# Install more libs
+RUN pip install lxml beautifulsoup4 gensim
+
+
+# Set up notebook config
+#COPY jupyter_notebook_config.py /root/.jupyter/
+
+# Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
+#COPY run_jupyter.sh /root/
+
+# Expose Ports for TensorBoard (6006), Ipython (8888)
+#EXPOSE 6006 8888
+
+#WORKDIR "/root"
+#CMD ["/bin/bash"]
+
+#RUN [ "python", "-c", "import nltk; nltk.download('all', download_dir='/usr/local/share/nltk_data')" ]
+#RUN python -m nltk.downloader punkt
+RUN python -m nltk.downloader -d /usr/local/share/nltk_data punkt
+
+
+WORKDIR /app
+VOLUME /app
+
+USER svm
+
+CMD ["python", "bugs_updater_app.py"]
