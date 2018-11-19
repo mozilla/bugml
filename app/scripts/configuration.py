@@ -15,7 +15,7 @@ UNTRIAGED_FILE_C = 'untriagedBugsData.csv'
 CONFIG_FILENAME_C = 'server_config.ini'
 
 
-# path to csv file with bugs features (desription, reporter, etc)
+# path to csv file with bugs features (description, reporter, etc)
 INPUT_DATA_FILE_PATH = os.path.join(DATA_DIR_C, DATA_FILENAME_C)
 MODEL_DIR = MODELS_DIR_C  # os.path.dirname(os.path.abspath( __file__ )) + '/models'
 LOG_DIR = LOGS_DIR_C  # os.path.dirname(os.path.abspath( __file__ )) + '/logs'
