@@ -66,7 +66,7 @@ class BugClassifier:
     def __init__(self, logger, classifier=SGDClassifier, classifier_parameters={},
                  text_processing_parameters={},
                  target_product='Firefox',
-                 components_exclude_list=['Untriaged']):
+                 components_exclude_list=['General', 'Untriaged']):
         self.logger = logger
         self.logger.info('Start create bug classifier: {}'.format(
             config.CLASSIFIER_NAMES_DICT[classifier]))
