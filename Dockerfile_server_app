@@ -8,7 +8,7 @@ VOLUME /app
 COPY server_app_cmd.sh /
 EXPOSE 5000 9090 9191
 
-USER svm
+USER root
 
 CMD ["/server_app_cmd.sh"]
 

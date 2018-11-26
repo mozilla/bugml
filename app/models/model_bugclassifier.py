@@ -20,7 +20,7 @@ def test_model(modelName, datasetName, px_test, py_test, sequenceInput=None):
                                    classifier_parameters=config.SGD_PARAMETERS,
                                    text_processing_parameters=config.TEXT_PROCESSING_PARAMETERS,
                                    target_product=sProduct,
-                                   components_exclude_list=['Untriaged'])
+                                   components_exclude_list=['General', 'Untriaged'])
 
     score, class_report = bug_classifier.load_data_train_test_model(data_file_path=config.INPUT_DATA_FILE_PATH,
                                                                     test_size=config.TEST_SIZE)

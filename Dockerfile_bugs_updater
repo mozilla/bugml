@@ -65,6 +65,6 @@ RUN python -m nltk.downloader -d /usr/local/share/nltk_data punkt
 WORKDIR /app
 VOLUME /app
 
-USER svm
+USER root
 
 CMD ["python", "bugs_updater_app.py"]

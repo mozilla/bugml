@@ -211,7 +211,7 @@ def downloadUntriaged(dateFrom='', sName=config.UNTRIAGED_FILE_C, baseLogger=Non
                         sDir=config.DATA_DIR_C, sName=sName, nMax=10000,
                         exactComponents=['Untriaged'],
                         dateFrom=dateFrom if '' != dateFrom else (
-                            datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d'),
+                            datetime.today() - timedelta(days=10)).strftime('%Y-%m-%d'),
                         dateTo='Now', baseLogger=baseLogger):
         return ''
     else:
